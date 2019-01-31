@@ -35,7 +35,6 @@
 *Credits: AS, 2015*
 
 """
-
 function ShotProfileEWEM(m::Array{AbstractString,1},d::Array{AbstractString,1},adj=true;damping=1000.,vp="vp.seis",vs="vs.seis",angx="angx.seis",angy="angy.seis",wav="wav.seis",sz=0.,gz=0.,nangx=1,oangx=0,dangx=1,nangy=1,oangy=0,dangy=1,fmin=0,fmax=80,padt=1,padx=1,verbose=false,sx=[0],sy=[0])
 
 
@@ -154,8 +153,8 @@ function ShotProfileEWEM(m::Array{AbstractString,1},d::Array{AbstractString,1},a
 				angx_shot,h_ang,extent = SeisRead(shot_list[ishot].angx)
 				angy_shot,h_ang,extent = SeisRead(shot_list[ishot].angy)
 			else
-				angx_shot = 0.*mpp_shot
-				angy_shot = 0.*mpp_shot
+				angx_shot = 0 .* mpp_shot
+				angy_shot = 0 .* mpp_shot
 			end
 
 			nx_shot = size(mpp_shot,2)
@@ -284,8 +283,8 @@ function ShotProfileEWEM(m::Array{AbstractString,1},d::Array{AbstractString,1},a
 				angx_shot,h_ang,extent = SeisRead(shot_list[ishot].angx)
 				angy_shot,h_ang,extent = SeisRead(shot_list[ishot].angy)
 			else
-				angx_shot = 0.*mpp_shot
-				angy_shot = 0.*mpp_shot
+				angx_shot = 0 .* mpp_shot
+				angy_shot = 0 .* mpp_shot
 			end
 			for imx = 1 : nx
 				for imy = 1 : ny
@@ -388,7 +387,7 @@ function ShotProfileEWEM(m::Array{AbstractString,1},d::Array{AbstractString,1},a
 	end
 end
 
-type Shot3C
+struct Shot3C
 	ux
 	uy
 	uz

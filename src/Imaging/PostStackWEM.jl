@@ -1,22 +1,33 @@
+"""
+**PostStackWEM**
+
+Post Stack Wave Equation Migration and Demigration of 3D isotropic data.
+
+# Arguments
+**IN**
+
+* `m` : filename of image
+* `d` : filename of data
+* `adj` : flag for adjoint (migration), or forward (demigration) (default=true)
+
+**Keyword arguments**
+
+* `vel = "NULL"` : seis file containing the velocity (should have same x and z dimensions as the desired image)
+* `damping=1000`: damping for deconvolution imaging condition
+* `nt=1`: trace length
+* `ot=0`:trace origin
+* `dt=0.001` : trace sample rate
+* `wav="NULL"` :seis file containing the source wavelet (in time domain)
+* `gz=0` : receiver depth
+* `fmin=0` : min frequency to process (Hz)
+* `fmax=99999` : max frequency to process (Hz)
+* `padt=2` : pad factor for the time axis
+* `padx=2` : pad factor for the spatial axes
+* `verbose=true` : flag for error / debugging messages
+
+"""
 function PostStackWEM(m,d,adj;vel="NULL",damping=1000,nt=1,ot=0,dt=0.001,wav="NULL",gz=0,fmin=0,fmax=99999,padt=2,padx=2,verbose=true)
-    # 
-    # PostStackWEM: Post Stack Wave Equation Migration and Demigration 
-    # of 3D isotropic data.
-    
-    #adj: flag for adjoint (migration), or forward (demigration)
-    #nt: trace length
-    #ot:trace origin
-    #dt : trace sample rate
-    #damping: damping for deconvolution imaging condition
-    #vel :seis file containing the velocity (should have same x and z dimensions as the desired image)
-    #wav :seis file containing the source wavelet (in time domain) 
-    #gz : receiver depth
-    #fmin : min frequency to process (Hz)
-    #fmax : max frequency to process (Hz)
-    #padt : pad factor for the time axis
-    #padx : pad factor for the spatial axes 
-    #verbose : flag for error / debugging messages
-    
+
     v,h = SeisRead(vel)
     min_imx = h[1].imx
     max_imx = h[end].imx
@@ -50,18 +61,18 @@ function PostStackWEM(m,d,adj;vel="NULL",damping=1000,nt=1,ot=0,dt=0.001,wav="NU
 	end
 	SeisWrite(d,d1,h)
     end
-    
+
     return
 end
 
 function zowem(in,adj;omx=0,dmx=1,nmx=1,omy=0,dmy=1,nmy=1,oz=0,dz=1,nz=1,ot=0,dt=1,nt=1,padt=2,padx=2,v=[],fmin=0.,fmax=999999.)
-    
+
     nf = padt*nt
     nkx = nmx > 1 ? padx*nmx : 1
     nky = nmy > 1 ? pady*nmy : 1
     dkx = 2*pi/nkx/dmx;
     dky = 2*pi/nky/dmy;
-    dw = 2.*pi/nf/dt
+    dw = 2*pi/nf/dt
     nw = int(nf/2) + 1
     if (adj)
 	d = pad3d(in,nf,nkx,nky)
@@ -69,32 +80,32 @@ function zowem(in,adj;omx=0,dmx=1,nmx=1,omy=0,dmy=1,nmy=1,oz=0,dz=1,nz=1,ot=0,dt
     else
 	m = pad3d(in,nz,nkx,nky)
 	d = zeros(Float32,nf,nkx,nky)
-    end	
-    
+    end
+
     # decompose slowness into layer average, and layer perturbation
-    po = zeros(Float32,nz) 
+    po = zeros(Float32,nz)
     pd = zeros(Float32,nz,nmx*nmy)
     for iz = 1 : nz
-	po[iz] = 1./mean(v[iz,:])
-	pd[iz,:] = 1./v[iz,:] - po[iz]
+	po[iz] = 1/mean(v[iz,:])
+	pd[iz,:] = 1 ./ v[iz,:] - po[iz]
     end
     pd = reshape(pd,nz,nmx,nmy)
     pd = pad3d(pd,nz,nkx,nky)
     param["po"] = po
     param["pd"] = pd
-    
-    if(1 <= int(fmin*dt*nf) < nw) 
+
+    if(1 <= int(fmin*dt*nf) < nw)
 	iw_min = int(floor(fmin*dt*nf))
-    else 
+    else
 	iw_min = 1
     end
-    if(fmax*dt*nf < nw) 
+    if(fmax*dt*nf < nw)
 	iw_max = int(floor(fmax*dt*nf))
-	else 
+	else
 	    iw_max = int(floor(0.5/dt))
     end
     # set up kx and ky vectors
-    kx = zeros(Float32,nkx,nky)	
+    kx = zeros(Float32,nkx,nky)
     ky = zeros(Float32,nkx,nky)
     for ikx = 1 : nkx
 	kx[ikx,:] = ikx <= int(nkx/2) ? dkx*(ikx-1) : -(dkx*(nkx-1) - dkx*(ikx-1))
@@ -124,11 +135,11 @@ function zowem(in,adj;omx=0,dmx=1,nmx=1,omy=0,dmy=1,nmy=1,oz=0,dz=1,nz=1,ot=0,dt
 		# symmetries
 	for iw=nw+1:nf
 	    D[iw,:,:] = conj(D[nf-iw+2,:,:])
-		end 
+		end
 	d = ifft(D,1)
 	return real(d[1:nt,1:nmx,1:nmy])
-    end	
-    
+    end
+
 end
 
 function extrap1f(m,d,adj,w=1,dz=1,po=[],pd=[],nz=1,kx=[],ky=[])
@@ -150,12 +161,12 @@ function extrap1f(m,d,adj,w=1,dz=1,po=[],pd=[],nz=1,kx=[],ky=[])
 	    d = fft_op(d,true)
 	    s = (w.^2)*(po[iz]^2) - kx.^2 - ky.^2
 	    s[(s.<.0)] = 0.
-	    d = d.*exp(-1im*sqrt(s)*dz)	
+	    d = d.*exp(-1im*sqrt(s)*dz)
 	    d = fft_op(d,false)
 	end
     end
     return m,d
-    
+
 end
 
 function pad3d(a,N1,N2,N3)
