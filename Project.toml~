@@ -1,0 +1,5 @@
+name = "SeisImaging"
+uuid = "56f9a7d7-289f-5411-88d5-0121b0f73cf3"
+authors = ["fercarozzi <carozzi@ualberta.ca>"]
+version = "0.1.0"
+

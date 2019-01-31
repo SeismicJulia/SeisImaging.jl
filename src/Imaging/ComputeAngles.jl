@@ -32,7 +32,6 @@
 *Credits: AS, 2015*
 
 """
-
 function ComputeAngles(angx::AbstractString,angy::AbstractString,dip_flag=false,vel="vel",wav="wav",sz=0.,nhx=100,ohx=0,dhx=10,nhy=1,ohy=0,dhy=10,pade_flag=false,fmin=0,fmax=80,padt=2,padx=2,verbose=false,sx=[0],sy=[0])
 
 	nshot = length(sx)
@@ -99,7 +98,7 @@ function ComputeAngles(angx::AbstractString,angy::AbstractString,dip_flag=false,
 
 end
 
-type ShotAngles
+struct ShotAngles
 	angx
 	angy
 	vel
