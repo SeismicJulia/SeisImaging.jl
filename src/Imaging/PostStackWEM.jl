@@ -1,29 +1,27 @@
 """
-**PostStackWEM**
+    PostStackWEM(m,d,adj;<keyword arguments>)
 
 Post Stack Wave Equation Migration and Demigration of 3D isotropic data.
 
 # Arguments
-**IN**
-
-* `m` : filename of image
-* `d` : filename of data
-* `adj` : flag for adjoint (migration), or forward (demigration) (default=true)
+- `m` : filename of image
+- `d` : filename of data
+- `adj` : flag for adjoint (migration), or forward (demigration) (default=true)
 
 **Keyword arguments**
 
-* `vel = "NULL"` : seis file containing the velocity (should have same x and z dimensions as the desired image)
-* `damping=1000`: damping for deconvolution imaging condition
-* `nt=1`: trace length
-* `ot=0`:trace origin
-* `dt=0.001` : trace sample rate
-* `wav="NULL"` :seis file containing the source wavelet (in time domain)
-* `gz=0` : receiver depth
-* `fmin=0` : min frequency to process (Hz)
-* `fmax=99999` : max frequency to process (Hz)
-* `padt=2` : pad factor for the time axis
-* `padx=2` : pad factor for the spatial axes
-* `verbose=true` : flag for error / debugging messages
+- `vel = "NULL"` : seis file containing the velocity (should have same x and z dimensions as the desired image)
+- `damping=1000`: damping for deconvolution imaging condition
+- `nt=1`: trace length
+- `ot=0`:trace origin
+- `dt=0.001` : trace sample rate
+- `wav="NULL"` :seis file containing the source wavelet (in time domain)
+- `gz=0` : receiver depth
+- `fmin=0` : min frequency to process (Hz)
+- `fmax=99999` : max frequency to process (Hz)
+- `padt=2` : pad factor for the time axis
+- `padx=2` : pad factor for the spatial axes
+- `verbose=true` : flag for error / debugging messages
 
 """
 function PostStackWEM(m,d,adj;vel="NULL",damping=1000,nt=1,ot=0,dt=0.001,wav="NULL",gz=0,fmin=0,fmax=99999,padt=2,padx=2,verbose=true)
