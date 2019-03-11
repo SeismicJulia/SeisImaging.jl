@@ -1,36 +1,31 @@
 """
-**ComputeAngles**
+	ComputeAngles(angx,angy,dip_flag=false,vel="vel",wav="wav",sz=0.,nhx=100,ohx=0,dhx=10,nhy=1,ohy=0,dhy=10,pade_flag=false,fmin=0,fmax=80,padt=2,padx=2,verbose=false,sx=[0],sy=[0])
 
-*Compute angles for shot gathers. These angles can be used for mapping migrated shots into angle gathers during shot profile migration.*
+Compute angles for shot gathers, for example, to map migrated shots into angle gathers during shot profile migration.
 
-**IN**
-
-
-* angx = "angx" : filename for incidence angles in the x direction for each shot
-* angy = "angy" : filename for incidence angles in the y direction for each shot
-* dip_flag = false : flag to subtract reflector dip from the computed angles to make them with reference to reflector normal
-* vel = "vel" : seis file containing the velocity (should have same x and z dimensions as the desired image)
-* wav = "wav" : seis file containing the source wavelet (in time domain)
-* sz = 0. : source depth (Dev: read this from source wavelet file for variable source depth)
-* nhx = 101 : number of offset bins
-* ohx = 1000. : min offset (surface offset in the data)
-* dhx = 10. : offset increment
-* nhy = 101 : number of offset bins
-* ohy = 1000. : min offset (surface offset in the data)
-* dhy = 10. : offset increment
-* pade_flag = false : flag for Pade Fourier correction
-* fmin = 0. : min frequency to process (Hz)
-* fmax = 80. : max frequency to process (Hz)
-* padt = 2 : pad factor for the time axis
-* padx = 2 : pad factor for the spatial axes
-* verbose = false : flag for error / debugging messages
-* sx = [0.] : array of source X positions (meters)
-* sy = [0.] : array of source Y positions (meters)
-
-**OUT**
+# Arguments
+- `angx::AbstractString` : filename for incidence angles in the x direction for each shot
+- `angy::AbstractString` : filename for incidence angles in the y direction for each shot
+- `dip_flag = false` : flag to subtract reflector dip from the computed angles to make them with reference to reflector normal
+- `vel = "vel"` : seis file containing the velocity (should have same x and z dimensions as the desired image)
+- `wav = "wav"` : seis file containing the source wavelet (in time domain)
+- `sz = 0.` : source depth (Dev: read this from source wavelet file for variable source depth)
+- `nhx = 101` : number of offset bins
+- `ohx = 1000.` : min offset (surface offset in the data)
+- `dhx = 10.` : offset increment
+- `nhy = 101` : number of offset bins
+- `ohy = 1000.` : min offset (surface offset in the data)
+- `dhy = 10.` : offset increment
+- `pade_flag = false` : flag for Pade Fourier correction
+- `fmin = 0.` : min frequency to process (Hz)
+- `fmax = 80.` : max frequency to process (Hz)
+- `padt = 2` : pad factor for the time axis
+- `padx = 2` : pad factor for the spatial axes
+- `verbose = false` : flag for error / debugging messages
+- `sx = [0.]` : array of source X positions (meters)
+- `sy = [0.]` : array of source Y positions (meters)
 
 *Credits: AS, 2015*
-
 """
 function ComputeAngles(angx::AbstractString,angy::AbstractString,dip_flag=false,vel="vel",wav="wav",sz=0.,nhx=100,ohx=0,dhx=10,nhy=1,ohy=0,dhy=10,pade_flag=false,fmin=0,fmax=80,padt=2,padx=2,verbose=false,sx=[0],sy=[0])
 

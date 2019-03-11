@@ -1,24 +1,20 @@
 """
-**WaveSep**
-
+    WaveSep(ux, uy, uz, up, us; <keyword arguments>)
 
 # Arguments
-**IN**
-
-* `ux,uy,uz,up,us` : velocity component
-
+- `ux,uy,uz,up,us` : velocity component
 **Keyword arguments**
-* `H=true` :  flag for exact Helmholtz decomp op (true), or adjoint of
+- `H=true` :  flag for exact Helmholtz decomp op (true), or adjoint of
 inverse Helmholtz decomp op (false)
-* `decomp=true` : flag for decomposition from data components to potentials (true),
+- `decomp=true` : flag for decomposition from data components to potentials (true),
  or recomposition from potentials to data components (false)
-* `vp=2000`: P-wave velocity
-* `vs=1000`: S-wave velocity
-* `fmin=0`: min frequency to process (Hz)
-* `fmax=80`: max frequency to process (Hz)
-* `verbose=true`: flag for error / debugging messages
-* `isx=0`: array of source bin numbers in the x direction
-* `isy=0`: array of source bin numbers in the y direction
+- `vp=2000`: P-wave velocity
+- `vs=1000`: S-wave velocity
+- `fmin=0`: min frequency to process (Hz)
+- `fmax=80`: max frequency to process (Hz)
+- `verbose=true`: flag for error / debugging messages
+- `isx=0`: array of source bin numbers in the x direction
+- `isy=0`: array of source bin numbers in the y direction
 """
 function WaveSep(ux, uy, uz, up, us;
                  H=true, decomp=true, vp=2000, vs=1000, fmin=0, fmax=80,

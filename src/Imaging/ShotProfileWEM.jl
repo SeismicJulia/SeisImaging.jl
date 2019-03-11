@@ -1,36 +1,35 @@
 """
-**ShotProfileWEM**
+	ShotProfileWEM(m,d,adj=true;<keyword arguments>)
 
-*Shot Profile Wave Equation Migration and Demigration of 3D isotropic data.*
+Shot Profile Wave Equation Migration and Demigration of 3D isotropic data.*
 
-**IN**
+# Arguments
+- `m::AbstractString` : filename of image
+- `d::AbstractString` : filename of data
+- `adj=true` : flag for adjoint (migration), or forward (demigration) (default=true)
+- `pspi=true` : flag for Phase Shift Plus Interpolation (default=true)
+- `nref=5` : number of reference velocities to use if pspi is selected (default=5)
+- `damping=1000.` : damping for deconvolution imaging condition
+- `vel="vel"` : seis file containing the velocity (should have same x and z dimensions as the desired image)
+- `angx="angx"` : seis file containing incidence angles in the x direction for each shot
+- `angy="angy"` : seis file containing incidence angles in the y direction for each shot
+- `wav="wav"` : seis file containing the source wavelet (in time domain)
+- `sz=0.` : source depth (Dev: read this from source wavelet file for variable source depth)
+- `gz=0.` : receiver depth (Dev: read this from data file for variable source depth (but then what to do in fwd op?))
+- `nangx=1` : number of angle bins in x direction
+- `oangx=0.` : min angle in x direction (angle between source incidence angle and reflector normal in Degrees)
+- `dangx=1.` : angle increment in x direction
+- `nangy=1` : number of angle bins in y direction
+- `oangy=0.` : min angle in y direction (angle between source incidence angle and reflector normal in Degrees)
+- `dangy=1.` : angle increment in y direction
+- `fmin=0.` : min frequency to process (Hz)
+- `fmax=80.` : max frequency to process (Hz)
+- `padt=2` : pad factor for the time axis
+- `padx=2` : pad factor for the spatial axes
+- `verbose=false` : flag for error / debugging messages
+- `sx=[0.]` : array of source X positions (meters)
+- `sy=[0.]` : array of source Y positions (meters)
 
-* m : filename of image
-* d : filename of data
-* adj : flag for adjoint (migration), or forward (demigration) (default=true)
-* pspi : flag for Phase Shift Plus Interpolation (default=true)
-* nref : number of reference velocities to use if pspi is selected (default=5)
-* vel = "vel" : seis file containing the velocity (should have same x and z dimensions as the desired image)
-* angx = "angx" : seis file containing incidence angles in the x direction for each shot
-* angy = "angy" : seis file containing incidence angles in the y direction for each shot
-* wav = "wav" : seis file containing the source wavelet (in time domain)
-* sz = 0. : source depth (Dev: read this from source wavelet file for variable source depth)
-* gz = 0. : receiver depth (Dev: read this from data file for variable source depth (but then what to do in fwd op?))
-* nangx = 1 : number of angle bins in x direction
-* oangx = 0. : min angle in x direction (angle between source incidence angle and reflector normal in Degrees)
-* dangx = 1. : angle increment in x direction
-* nangy = 1 : number of angle bins in y direction
-* oangy = 0. : min angle in y direction (angle between source incidence angle and reflector normal in Degrees)
-* dangy = 1. : angle increment in y direction
-* fmin = 0. : min frequency to process (Hz)
-* fmax = 80. : max frequency to process (Hz)
-* padt = 2 : pad factor for the time axis
-* padx = 2 : pad factor for the spatial axes
-* verbose = false : flag for error / debugging messages
-* sx = [0.] : array of source X positions (meters)
-* sy = [0.] : array of source Y positions (meters)
-
-**OUT**
 
 *Credits: AS, 2015*
 
